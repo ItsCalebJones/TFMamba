@@ -1,0 +1,87 @@
+<!--
+  Copyright 2013 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<resources>
+    <string name="page_title">Newest StackOverflow questions tagged \'android\'</string>
+    <string name="updated">Last updated:</string>
+    <string name="lost_connection">Lost connection.</string>
+    <string name="wifi_connected">Wi-Fi reconnected.</string>
+    <string name="connection_error">Unable to load content. Check your network connection.</string>
+    <string name="xml_error">Error parsing XML.</string>
+    <string name="app_name">Task Force Mamba</string>
+    <string-array name="planets_array">
+        <item>Beta</item>
+        <item>Media</item>
+        <item>Events</item>
+        <item>Apply</item>
+        <item>About</item>
+    </string-array>
+    <string name="TFM">Task Force Mamba | Tactical Realism\n
+    Official Android Application\n\n
+
+    Join us over at http://www.tfmamba.com.</string>
+    <string name="Founders">The Founding Fathers\n\n
+
+        Captain - Dr.Wub\n
+        First Lt. - KillPact\n
+        First Sgt. -Sr7x\n
+</string>
+    <string name="Command_Structure">Command Retinue\n\n
+
+    Mamba Actual - Cpt. Dr.Wub\n
+    FedEx - 1SG. Sr7x
+    Spartan Actual - 1LT. KillPact\n
+    Rhino Lead - SFC. Sw1ss4rmy\n
+    Icarus Lead - CW3 Celsiuz\n
+    Spartan One SQL - SFC. Spoon\n
+    Spartan One FTL - SGT. Grieze\n
+    Spartan Two SQL - SSG. Thor\n
+    Spartan Two FTL - SGT. Koun7erfit\n
+    Spartan Three SQL - SSG. Kaylash\n
+    Spartan Three FTL - SGT. Kronobandit\n
+
+
+</string>
+    <string name="Office_Structure">Command Office\n\n
+
+       Logistics Office - Sr7x\n
+       Logistics Office - Thor\n
+       Personnel Office - Sw1ss4rmy
+       Mod Office - Sr7x\n
+       PR/Media Office - Koun7erfit\n
+       Missions Office - Kronobandit\n
+
+    </string>
+    <string name="roster">Roster\n\n
+
+To be added...
+
+    </string>
+    <string name="hello_world">Hellow World!</string>
+    <string name="title_activity_main">Now Layout</string>
+    <string name="VersionName">Version 1.2</string>
+    <string name="VersionCode">3</string>
+    <string name="steam">Steam</string>
+    <string name="home">Beta</string>
+    <string name="youtube">YouTube</string>
+    <string name="apply">Apply</string>
+    <string name="about">About</string>
+    <string name="title_activity_display_message">My Message</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_websearch">Web search</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
+</resources>

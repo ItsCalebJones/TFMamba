@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true" >
+
+    <com.cjones.taskforcemamba.NowLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#e3e3e3"
+            android:orientation="vertical" >
+  <ListView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      style="@style/nowCardStyle"
+      android:id="@+id/rssfeed_listview"
+      android:background="@drawable/card_background"
+      >
+
+      </ListView>
+        <Button
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:text="Sort"
+                android:id="@+id/sort"
+                />
+    </com.cjones.taskforcemamba.NowLayout>
+
+</ScrollView>

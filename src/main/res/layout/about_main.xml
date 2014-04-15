@@ -1,0 +1,57 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true" >
+
+    <com.cjones.taskforcemamba.NowLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#e3e3e3"
+            android:orientation="vertical" >
+
+        <TextView
+                android:id="@+id/txtView"
+                style="@style/nowCardStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/TFM"
+                tools:context=".about_main" />
+
+        <TextView
+                android:id="@+id/txtView"
+                style="@style/nowCardStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Founders"
+                tools:context=".about_main" />
+        <TextView
+            android:id="@+id/txtView"
+            style="@style/nowCardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Command_Structure"
+            tools:context=".about_main" />
+
+        <TextView
+                android:id="@+id/txtView"
+                style="@style/nowCardStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Office_Structure"
+                tools:context=".about_main" />
+
+        <TextView
+                android:id="@+id/txtView"
+                style="@style/nowCardStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/roster"
+                tools:context=".about_main" />
+
+
+
+
+    </com.cjones.taskforcemamba.NowLayout>
+
+</ScrollView>
