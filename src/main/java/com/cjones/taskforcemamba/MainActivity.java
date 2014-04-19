@@ -34,6 +34,7 @@ import android.webkit.WebView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.cjones.taskforcemamba.activity.RssFeedReaderActivity;
 
@@ -61,13 +62,27 @@ public class MainActivity extends Activity {
         mTitle = mDrawerTitle = getTitle();
 
         //WebView
-        myWebView = (WebView) findViewById(R.id.webview);
-        WebSettings webSettings = myWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        myWebView.loadUrl("http://tfmamba.com");
+        Intent launchingIntent = getIntent();
+        String content = launchingIntent.getData().toString();
+        String home = "http://www.tfmamba.com";
+//        Log.i(TAG, "Content = " + content + " . Home = " + home);
+//        if(content == home){
+//            content = content + "&styleid=2";
+//            Log.i(TAG, "IF Statement - Content = " + content + " . Home = " + home);
+//        } else {
+//            Log.i(TAG, "Else Statement - Content = " + content + " . Home = " + home);
+//        }
+        Log.i(TAG, "conte = " + content);
         WebView myWebView = (WebView) findViewById(R.id.webview);
+            if(content == null){
+                myWebView.loadUrl(home);
+        }else {
+                myWebView.loadUrl(content);
+            }
         myWebView.setWebViewClient(new WebViewClient());
         myWebView.getSettings().setBuiltInZoomControls(true);
+        myWebView.getSettings().setJavaScriptEnabled(true);
+        myWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
         final ProgressBar Pbar;
         Pbar = (ProgressBar) findViewById(R.id.pB1);
@@ -87,7 +102,9 @@ public class MainActivity extends Activity {
         if (savedInstanceState != null) {
             myWebView.restoreState(savedInstanceState);
         } else {
-            myWebView.loadUrl("http://tfmamba.com");
+            if(content == null && !content.isEmpty()){
+            myWebView.loadUrl("http://www.tfmamba.com");
+            }
         }
     }
 
@@ -109,24 +126,25 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.refresh:
                 Log.i(TAG, "Refresh trigger");
+                if(myWebView == null){
+                    finish();
+                    startActivity(getIntent());
+                } else {
                 myWebView.reload();
+                return true;
+                }
             case R.id.home:
                 Log.i(TAG, "Home trigger");
-                Intent rssIntent = new Intent(this, RssFeedReaderActivity.class);
-                setContentView(R.layout.rssfeedadapter_layout);
-                startActivity(rssIntent);
-                return true;
-            case R.id.steam:
-                Log.i(TAG, "Steam trigger");
-                myWebView.loadUrl("http://steamcommunity.com/groups/TFMamba");
+                Intent intent = new Intent(this, RssFeedReaderActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.youtube:
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=ILAT3qPB1FA")));
                 return true;
             case R.id.about:
                 Log.i(TAG, "About trigger");
-                Intent intent = new Intent(this, About.class);
-                startActivity(intent);
+                Intent ThisIntent = new Intent(this, About.class);
+                startActivity(ThisIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -150,22 +168,16 @@ public class MainActivity extends Activity {
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(event.getAction() == KeyEvent.ACTION_DOWN){
-            switch(keyCode)
-            {
-                case KeyEvent.KEYCODE_BACK:
-                    if(myWebView.canGoBack()){
-                        myWebView.goBack();
-                    }else{
-                        finish();
-                    }
-                    return true;
-            }
-
+        // Check if the key event was the Back button and if there's history
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && myWebView.canGoBack()) {
+            myWebView.goBack();
+            return true;
         }
+        // If it wasn't the Back key or there's no web page history, bubble up to the default
+        // system behavior (probably exit the activity)
         return super.onKeyDown(keyCode, event);
     }
-    private static final String TAG = "Task Force Mamba";
+    public static final String TAG = "Task Force Mamba";
 
     @Override
     public void onConfigurationChanged(Configuration newConfig){

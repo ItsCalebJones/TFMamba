@@ -12,22 +12,28 @@
                 android:paddingRight="3dip"
                 android:paddingTop="25dip"
                 android:background="@drawable/ic_launcher"
-                android:id="@+id/feed_image"
+                android:id="@+id/def_image"
                 android:layout_gravity="center_horizontal|top"/>
         <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:paddingRight="3dip"
                 android:orientation="vertical">
+            <ImageView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/feed_image"
+
+                    />
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:paddingRight="8dip"
-                android:paddingTop="5dip"
+                android:paddingTop="0dip"
                 android:id="@+id/feed_text"
-                android:text="sads"
+                android:text=" "
                 android:paddingLeft="8dip"
-                android:paddingBottom="50dip"
+                android:paddingBottom="25dip"
                 />
             <TextView
                     android:layout_height="wrap_content"
@@ -35,7 +41,7 @@
                     android:paddingRight="8dip"
                     android:paddingTop="5dip"
                     android:id="@+id/feed_description"
-                    android:text="sads"
+                    android:text=" "
                     android:paddingLeft="8dip"
                     android:paddingBottom="5dip"
                     />
@@ -45,7 +51,7 @@
                 android:paddingRight="8dip"
                 android:paddingTop="5dip"
                 android:id="@+id/feed_link"
-                android:text="sads"
+                android:text=" "
                 android:paddingLeft="8dip"
                 android:paddingBottom="10dip"
                 />

@@ -61,7 +61,8 @@
        Logistics Office - Thor\n
        Personnel Office - Sw1ss4rmy
        Mod Office - Sr7x\n
-       PR/Media Office - Koun7erfit\n
+       PR Office - Koun7erfit\n
+       Media Office - Kaylash\n
        Missions Office - Kronobandit\n
 
     </string>
@@ -74,8 +75,8 @@ To be added...
     <string name="title_activity_main">Now Layout</string>
     <string name="VersionName">Version 1.2</string>
     <string name="VersionCode">3</string>
-    <string name="steam">Steam</string>
-    <string name="home">Beta</string>
+    <string name="steam">k</string>
+    <string name="home">Home</string>
     <string name="youtube">YouTube</string>
     <string name="apply">Apply</string>
     <string name="about">About</string>

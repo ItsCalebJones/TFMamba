@@ -2,7 +2,12 @@ package com.cjones.taskforcemamba.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -10,6 +15,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.cjones.taskforcemamba.About;
 import com.cjones.taskforcemamba.R;
 
 /**
@@ -30,6 +36,7 @@ public class TutViewerActivity extends Activity {
             webSettings.setJavaScriptEnabled(true);
             mWebView.setWebViewClient(new WebViewClient());
             mWebView.getSettings().setBuiltInZoomControls(true);
+            mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
             final ProgressBar Pbar;
             Pbar = (ProgressBar) findViewById(R.id.pB2);
@@ -48,5 +55,7 @@ public class TutViewerActivity extends Activity {
                 }
             });
         }
+
+    public static final String TAG = "Task Force Mamba";
     }
 

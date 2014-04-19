@@ -19,12 +19,6 @@
       >
 
       </ListView>
-        <Button
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:text="Sort"
-                android:id="@+id/sort"
-                />
     </com.cjones.taskforcemamba.NowLayout>
 
 </ScrollView>

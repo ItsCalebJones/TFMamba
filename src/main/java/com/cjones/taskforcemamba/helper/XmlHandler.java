@@ -1,14 +1,6 @@
 package com.cjones.taskforcemamba.helper;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+import android.util.Log;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -16,10 +8,14 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.util.Log;
-import android.widget.Toast;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.google.android.gms.ads.a;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 
 public class XmlHandler extends DefaultHandler {
@@ -48,6 +44,7 @@ chars = new StringBuffer();
 }
 
 }
+
 public void endElement(String uri, String localName, String qName) throws SAXException {
 if (localName.equalsIgnoreCase("title"))
 {
@@ -57,6 +54,9 @@ else if (localName.equalsIgnoreCase("description"))
 {
 
     feedStr.setDescription(chars.toString());
+    if (feedStr != null){
+    Log.i("Mamba", "Steam" + feedStr);
+    }
 
 }
 else if (localName.equalsIgnoreCase("pubDate"))
@@ -90,9 +90,13 @@ throw new SAXException();
 }
 }
 }
-
+@Override
 public void characters(char ch[], int start, int length) {
+    if (feedStr != null){
+
 chars.append(new String(ch, start, length));
+
+    }
 }
 
 

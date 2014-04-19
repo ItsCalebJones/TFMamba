@@ -62,20 +62,20 @@ public void setDescription(String description) {
 this.description = description;
 
 
-if (description.contains("<img ")){
-String img = description.substring(description.indexOf("<img "));
-String cleanUp = img.substring(0, img.indexOf(">")+1);
-img = img.substring(img.indexOf("src=") + 5);
-int indexOf = img.indexOf("'");
-if (indexOf==-1){
-indexOf = img.indexOf("\"");
-}
-img = img.substring(0, indexOf);
-
+//if (description.contains("<img ")){
+//String img = description.substring(description.indexOf("<img "));
+//String cleanUp = img.substring(0, img.indexOf(">")+1);
+//img = img.substring(img.indexOf("src=") + 5);
+//int indexOf = img.indexOf("'");
+//if (indexOf==-1){
+//indexOf = img.indexOf("\"");
+//}
+//img = img.substring(0, indexOf);
+//
 //setImgLink(img);
 
-this.description = this.description.replace(cleanUp, "");
-}
+//this.description = this.description.replace(cleanUp, "");
+//}
 }
 /**
 * @return the description
@@ -119,6 +119,7 @@ this.imgLink = imgLink;
 public String getImgLink() {
 return imgLink;
 }
+
 
 }
 
