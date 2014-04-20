@@ -1,5 +1,6 @@
 package com.cjones.taskforcemamba.adapter;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -16,8 +17,10 @@ import com.cjones.taskforcemamba.helper.RssFeedStructure;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.StrictMode;
@@ -32,6 +35,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 
 public class RssReaderListAdapter extends ArrayAdapter<RssFeedStructure> {
 	List<RssFeedStructure> imageAndTexts1 =null;
@@ -60,42 +69,45 @@ TextView dtextView = (TextView) rowView.findViewById(R.id.feed_description);
 TextView timeFeedText = (TextView) rowView.findViewById(R.id.feed_updatetime);
 TextView feed_link = (TextView)rowView.findViewById(R.id.feed_link);
 ImageView imageView = (ImageView) rowView.findViewById(R.id.feed_image);
-        try {
+//        try {
         	
         	Log.d("rssfeed", "imageAndTexts1.get(position).getImgLink() :: " +imageAndTexts1.get(position).getImgLink() +" :: " +imageAndTexts1.get(position).getTitle());
         	textView.setText(imageAndTexts1.get(position).getTitle());
+            textView.setTypeface(null, Typeface.BOLD);
             dtextView.setText (Html.fromHtml(getItem(position).getDescription()));
             feed_link.setText(imageAndTexts1.get(position).getImgLink());
         	SpannableString content = new SpannableString(imageAndTexts1.get(position).getPubDate());
-        	 content.setSpan(new UnderlineSpan(), 0, 13, 0);
+        	content.setSpan(new UnderlineSpan(), 0, 13, 0);
 
-             timeFeedText.setText(content);
-
-
+            timeFeedText.setText(content);
+            //ISSUE: Feed image isn't returning the URL's inside <img src> instead is returning the Title URL
             if(imageAndTexts1.get(position).getImgLink() !=null){
-                URL feedImage = new URL(imageAndTexts1.get(position).getImgLink().toString());
+                String feedImage = new String(getItem(position).getImgLink().toString());
+                Log.i("Mamba", "feedImage = " + feedImage);
                 if(!feedImage.toString().equalsIgnoreCase("null")){
                     //String feed = "http://feeds.nytimes.com/nyt/rss/HomePage";
 //                    HttpURLConnection conn= (HttpURLConnection)feedImage.openConnection();
 //                    InputStream is = conn.getInputStream();
 //                    IMGFeedTask IMGTask = new IMGFeedTask();
 //                    IMGTask.execute();
-
-
+                    ImageLoader imageLoader = ImageLoader.getInstance();
+                    imageLoader.init(ImageLoaderConfiguration.createDefault(getContext()));
+                    imageLoader.displayImage(feedImage, imageView);
                 }
                 else{
                     imageView.setBackgroundResource(R.drawable.ic_launcher);
                 }
             }
 
+
        
         	
-        } catch (MalformedURLException e) {
-       
-        }
-        catch (IOException e) {
-        
-        }
+//        } catch (MalformedURLException e) {
+//
+//        }
+//        catch (IOException e) {
+//
+//        }
 
 
 return rowView;

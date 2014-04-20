@@ -36,10 +36,10 @@ chars = new StringBuffer();
 	
 {
 	 if(!atts.getValue("url").toString().equalsIgnoreCase("null")){
-	 feedStr.setImgLink(atts.getValue("url").toString());
+	 feedStr.setURLLink(atts.getValue("url").toString());
 	 }
 	 else{
-		 feedStr.setImgLink(""); 
+		 feedStr.setURLLink("");
 	 }
 }
 
@@ -76,7 +76,7 @@ else if (qName.equalsIgnoreCase("media:content"))
 }
 else if (localName.equalsIgnoreCase("link"))
 {
-    feedStr.setImgLink(chars.toString());
+    feedStr.setURLLink(chars.toString());
 
 }
 if (localName.equalsIgnoreCase("item")) {

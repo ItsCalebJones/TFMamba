@@ -1,5 +1,7 @@
 package com.cjones.taskforcemamba.helper;
 
+import android.util.Log;
+
 import java.net.URL;
 
 
@@ -13,6 +15,7 @@ private String imgLink;
 private String pubDate;
 private URL url;
 private String encodedContent;
+private String URLLink;
 
 public long getArticleId() {
 return articleId;
@@ -59,23 +62,26 @@ this.url = url;
 * @param description the description to set
 */
 public void setDescription(String description) {
-this.description = description;
+    this.description = description;
 
+    if (description.contains("<img ")){
+        String img = description.substring(description.indexOf("<img "));
+        String cleanUp = img.substring(0, img.indexOf(">")+1);
+        img = cleanUp.substring(img.indexOf("src=") + 5);
+        String s = "\" border=\"0\" alt=\"\" />";
+        if(img.contains("\" border=\"0\" alt=\"\" />")){
+            img = img.replace("\" border=\"0\" alt=\"\" />", "");
+        }
+        int indexOf = img.indexOf("");
+        if (indexOf==-1){
+            indexOf = img.indexOf("\"");
+        }
+        img = img.substring(0, indexOf);
 
-//if (description.contains("<img ")){
-//String img = description.substring(description.indexOf("<img "));
-//String cleanUp = img.substring(0, img.indexOf(">")+1);
-//img = img.substring(img.indexOf("src=") + 5);
-//int indexOf = img.indexOf("'");
-//if (indexOf==-1){
-//indexOf = img.indexOf("\"");
-//}
-//img = img.substring(0, indexOf);
-//
-//setImgLink(img);
+        setImgLink(img);
 
-//this.description = this.description.replace(cleanUp, "");
-//}
+        this.description = this.description.replace(cleanUp, "");
+    }
 }
 /**
 * @return the description
@@ -86,6 +92,7 @@ return description;
 /**
 * @param pubDate the pubDate to set
 */
+
 public void setPubDate(String pubDate) {
 this.pubDate = pubDate;
 }
@@ -108,16 +115,23 @@ public String getEncodedContent() {
 return encodedContent;
 }
 /**
-* @param imgLink the imgLink to set
-*/
-public void setImgLink(String imgLink) {
-this.imgLink = imgLink;
-}
+ * @param imgLink the imgLink to set
+ */
+    public void setImgLink(String imgLink) {
+        this.imgLink = imgLink;
+        Log.i("Mamba", "imgLink =" + this.imgLink);
+    }
 /**
 * @return the imgLink
 */
 public String getImgLink() {
 return imgLink;
+}
+public String getURLLink() {
+    return URLLink;
+}
+public void setURLLink(String URLLink) {
+    this.URLLink = URLLink;
 }
 
 

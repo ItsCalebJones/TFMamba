@@ -91,6 +91,8 @@ public class RssFeedReaderActivity extends Activity {
 
        RssFeedTask rssTask = new RssFeedTask();
        rssTask.execute();
+
+
 }
     private class RssFeedTask extends AsyncTask<String, Void, String> {
 		// private String Content;
