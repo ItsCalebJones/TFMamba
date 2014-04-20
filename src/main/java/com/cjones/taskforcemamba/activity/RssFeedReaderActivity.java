@@ -21,6 +21,9 @@ import com.cjones.taskforcemamba.helper.ReverseOrder;
 import com.cjones.taskforcemamba.helper.RssFeedStructure;
 import com.cjones.taskforcemamba.helper.XmlHandler;
 import com.cjones.taskforcemamba.adapter.RssReaderListAdapter;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -66,6 +69,9 @@ public class RssFeedReaderActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+        .build();
+        ImageLoader.getInstance().init(config);
         setContentView(R.layout.rssfeedreaderactivity);
        _rssFeedListView = (ListView)findViewById(R.id.rssfeed_listview);
        _rssFeedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,8 +97,6 @@ public class RssFeedReaderActivity extends Activity {
 
        RssFeedTask rssTask = new RssFeedTask();
        rssTask.execute();
-
-
 }
     private class RssFeedTask extends AsyncTask<String, Void, String> {
 		// private String Content;
@@ -112,7 +116,7 @@ public class RssFeedReaderActivity extends Activity {
 			  try {
 				  //String feed = "http://feeds.nytimes.com/nyt/rss/HomePage";
 				  
-				  String feed = "http://www.tfmamba.com/external.php?do=rss&type=newcontent&sectionid=155&days=120&count=15";
+				  String feed = "http://www.tfmamba.com/external.php?do=rss&type=newcontent&sectionid=155&days=120&count=10";
 				  XmlHandler rh = new XmlHandler();
 				  rssStr = rh.getLatestArticles(feed);
 			        } catch (Exception e) {

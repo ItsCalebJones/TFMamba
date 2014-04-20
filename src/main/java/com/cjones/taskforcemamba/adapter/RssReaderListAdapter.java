@@ -53,14 +53,8 @@ imageAndTexts1 = imageAndTexts;
 @Override
 public View getView(int position, View convertView, ViewGroup parent) {
 
-    StrictMode.ThreadPolicy policy = new StrictMode.
-    ThreadPolicy.Builder().permitAll().build();
-    StrictMode.setThreadPolicy(policy);
-
 Activity activity = (Activity) getContext();
 LayoutInflater inflater = activity.getLayoutInflater();
-
-
 View rowView = inflater.inflate(R.layout.rssfeedadapter_layout, null);
 
 //This sets up the listview items into TextView
@@ -75,12 +69,12 @@ ImageView imageView = (ImageView) rowView.findViewById(R.id.feed_image);
         	textView.setText(imageAndTexts1.get(position).getTitle());
             textView.setTypeface(null, Typeface.BOLD);
             dtextView.setText (Html.fromHtml(getItem(position).getDescription()));
-            feed_link.setText(imageAndTexts1.get(position).getImgLink());
+            feed_link.setText(imageAndTexts1.get(position).getURLLink());
         	SpannableString content = new SpannableString(imageAndTexts1.get(position).getPubDate());
         	content.setSpan(new UnderlineSpan(), 0, 13, 0);
 
             timeFeedText.setText(content);
-            //ISSUE: Feed image isn't returning the URL's inside <img src> instead is returning the Title URL
+            //ISSUE FIXED: Feed image isn't returning the URL's inside <img src> instead is returning the Title URL
             if(imageAndTexts1.get(position).getImgLink() !=null){
                 String feedImage = imageAndTexts1.get(position).getImgLink().toString();
                 String NewFeedImage = String.valueOf(feedImage);
@@ -91,9 +85,12 @@ ImageView imageView = (ImageView) rowView.findViewById(R.id.feed_image);
 //                    InputStream is = conn.getInputStream();
 //                    IMGFeedTask IMGTask = new IMGFeedTask();
 //                    IMGTask.execute();
-                    ImageLoader imageLoader = ImageLoader.getInstance();
-                    imageLoader.init(ImageLoaderConfiguration.createDefault(getContext()));
-                    imageLoader.displayImage(NewFeedImage, imageView);
+
+                    DisplayImageOptions options = new DisplayImageOptions.Builder()
+                    .cacheInMemory(true)
+                    .cacheOnDisc(true)
+                    .build();
+                    ImageLoader.getInstance().displayImage(NewFeedImage, imageView, options);
                 }
                 else{
                     imageView.setBackgroundResource(R.drawable.ic_launcher);

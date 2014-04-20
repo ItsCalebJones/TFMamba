@@ -17,11 +17,13 @@
         <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:paddingRight="3dip"
+                android:paddingRight="0dip"
                 android:orientation="vertical">
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:gravity="center"
+                android:textSize="20sp"
                 android:paddingRight="8dip"
                 android:paddingTop="0dip"
                 android:id="@+id/feed_text"
@@ -33,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:id="@+id/feed_image"
+                android:gravity="center"
                 />
             <View
                 android:layout_width="fill_parent"
