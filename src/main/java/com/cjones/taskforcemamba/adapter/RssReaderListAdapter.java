@@ -82,8 +82,9 @@ ImageView imageView = (ImageView) rowView.findViewById(R.id.feed_image);
             timeFeedText.setText(content);
             //ISSUE: Feed image isn't returning the URL's inside <img src> instead is returning the Title URL
             if(imageAndTexts1.get(position).getImgLink() !=null){
-                String feedImage = new String(getItem(position).getImgLink().toString());
-                Log.i("Mamba", "feedImage = " + feedImage);
+                String feedImage = imageAndTexts1.get(position).getImgLink().toString();
+                String NewFeedImage = String.valueOf(feedImage);
+                Log.i("Mamba", "feedImage = " + feedImage + "NewFeedImage = " + NewFeedImage);
                 if(!feedImage.toString().equalsIgnoreCase("null")){
                     //String feed = "http://feeds.nytimes.com/nyt/rss/HomePage";
 //                    HttpURLConnection conn= (HttpURLConnection)feedImage.openConnection();
@@ -92,7 +93,7 @@ ImageView imageView = (ImageView) rowView.findViewById(R.id.feed_image);
 //                    IMGTask.execute();
                     ImageLoader imageLoader = ImageLoader.getInstance();
                     imageLoader.init(ImageLoaderConfiguration.createDefault(getContext()));
-                    imageLoader.displayImage(feedImage, imageView);
+                    imageLoader.displayImage(NewFeedImage, imageView);
                 }
                 else{
                     imageView.setBackgroundResource(R.drawable.ic_launcher);

@@ -76,7 +76,7 @@ public void setDescription(String description) {
         if (indexOf==-1){
             indexOf = img.indexOf("\"");
         }
-        img = img.substring(0, indexOf);
+
 
         setImgLink(img);
 
