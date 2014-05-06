@@ -56,9 +56,9 @@ import android.widget.Toast;
 public class RssFeedReaderActivity extends Activity {
     /** Called when the activity is first created. */
 	
-	ListView _rssFeedListView;
+	List<ListView> _rssFeedListViews;
 	List<JSONObject> jobs ;
-	List<RssFeedStructure> rssStr ;
+	List<List<RssFeedStructure>> rssStrs;
 	private RssReaderListAdapter _adapter;
 	String sorti = "";
 	String mode = "";
@@ -73,27 +73,29 @@ public class RssFeedReaderActivity extends Activity {
         .build();
         ImageLoader.getInstance().init(config);
         setContentView(R.layout.rssfeedreaderactivity);
-       _rssFeedListView = (ListView)findViewById(R.id.rssfeed_listview);
-       _rssFeedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                //Display the Title and Date to the user when they click on an episode
-//                Object o = _rssFeedListView.getItemAtPosition(position);
-//                RssFeedStructure obj_itemDetails = (RssFeedStructure)o;
-//                String objURL = obj_itemDetails.getImgLink();
-//                if (objURL != null){
-////                    Toast.makeText(getApplicationContext(), "objURL = " + objURL, Toast.LENGTH_LONG).show();
-//                }
-//                Intent showContent = new Intent(getApplicationContext(),
-//                MainActivity.class);
-//                showContent.setData(Uri.parse(objURL));
-//                startActivity(showContent);
-                Toast.makeText(getApplicationContext(), "Clicking on an item is a future enhancement, for now click the cloud icon to launch to the webview.", Toast.LENGTH_LONG).show();
-            }
-
-        });
+        for(ListView lv : _rssFeedListViews){
+        	lv = (ListView)findViewById(R.id.rssfeed_listview);
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	
+	            @Override
+	            public void onItemClick(AdapterView<?> parent, View view, int position,
+	                                    long id) {
+	                //Display the Title and Date to the user when they click on an episode
+	//                Object o = _rssFeedListView.getItemAtPosition(position);
+	//                RssFeedStructure obj_itemDetails = (RssFeedStructure)o;
+	//                String objURL = obj_itemDetails.getImgLink();
+	//                if (objURL != null){
+	////                    Toast.makeText(getApplicationContext(), "objURL = " + objURL, Toast.LENGTH_LONG).show();
+	//                }
+	//                Intent showContent = new Intent(getApplicationContext(),
+	//                MainActivity.class);
+	//                showContent.setData(Uri.parse(objURL));
+	//                startActivity(showContent);
+	                Toast.makeText(getApplicationContext(), "Clicking on an item is a future enhancement, for now click the cloud icon to launch to the webview.", Toast.LENGTH_LONG).show();
+	            }
+	
+		});
+        }
 
        RssFeedTask rssTask = new RssFeedTask();
        rssTask.execute();
@@ -115,10 +117,12 @@ public class RssFeedReaderActivity extends Activity {
 		protected String doInBackground(String... urls) {
 			  try {
 				  //String feed = "http://feeds.nytimes.com/nyt/rss/HomePage";
+				  List<String> feeds= new ArrayList<String>(){"0", "1", "2"};
 				  
-				  String feed = "http://www.tfmamba.com/external.php?do=rss&type=newcontent&sectionid=155&days=120&count=10";
-				  XmlHandler rh = new XmlHandler();
-				  rssStr = rh.getLatestArticles(feed);
+				  for(String s : feeds) { 
+				  	XmlHandler rh = new XmlHandler();
+				  	rssStrs.add(rh.getLatestArticles(s);
+				  }
 			        } catch (Exception e) {
 			        }
 			return response;
@@ -138,9 +142,13 @@ public class RssFeedReaderActivity extends Activity {
 			  }else{
 				  sorti = "";
 			  }
-			  if(rssStr != null){
-			    _adapter = new RssReaderListAdapter(RssFeedReaderActivity.this,rssStr);
-		        _rssFeedListView.setAdapter(_adapter);
+			  if(rssStrs != null){
+			  	int adapterCt = 0;
+			  	for(ListView lv : _rssFeedListViews){
+			  		if(adapterCt < rssStrs.size()){
+			  			lv.setAdapter = new RssReaderListAdapter(RssFeedReaderActivity.this, rssStrs.get(adapterCt));
+			  		}
+			  	}
 			  }
 		        Dialog.dismiss();
 		}
