@@ -1,41 +1,15 @@
 package com.cjones.taskforcemamba.activity;
 
-import java.net.URL;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Vector;
 
 import org.json.JSONObject;
 
-import com.cjones.taskforcemamba.About;
-import com.cjones.taskforcemamba.MainActivity;
-import com.cjones.taskforcemamba.R;
-import com.cjones.taskforcemamba.adapter.RssReaderListAdapter;
-import com.cjones.taskforcemamba.helper.SortingOrder;
-import com.cjones.taskforcemamba.helper.ReverseOrder;
-import com.cjones.taskforcemamba.helper.RssFeedStructure;
-import com.cjones.taskforcemamba.helper.XmlHandler;
-import com.cjones.taskforcemamba.adapter.RssReaderListAdapter;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -44,22 +18,36 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.cjones.taskforcemamba.About;
+import com.cjones.taskforcemamba.MainActivity;
+import com.cjones.taskforcemamba.R;
+import com.cjones.taskforcemamba.adapter.RssReaderListAdapter;
+import com.cjones.taskforcemamba.helper.ReverseOrder;
+import com.cjones.taskforcemamba.helper.RssFeedStructure;
+import com.cjones.taskforcemamba.helper.SortingOrder;
+import com.cjones.taskforcemamba.helper.XmlHandler;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 public class RssFeedReaderActivity extends Activity {
     /** Called when the activity is first created. */
 	
-	ListView _rssFeedListView;
+	private final String feed = "http://feeds.nytimes.com/nyt/rss/HomePage";
+	//preppulating feed list with the same feeds since I don't have any others to use right now.
+	private final List<String> feeds= new ArrayList<String>(){{
+			add(feed); 
+			add(feed); 
+			add(feed);
+		}};
+	
+	List<ListView> _rssFeedListViews = new ArrayList<ListView>();
 	List<JSONObject> jobs ;
-	List<RssFeedStructure> rssStr ;
-	private RssReaderListAdapter _adapter;
+	List<List<RssFeedStructure>> rssStrs;
 	String sorti = "";
 	String mode = "";
 	Button sort_Btn;
@@ -73,27 +61,32 @@ public class RssFeedReaderActivity extends Activity {
         .build();
         ImageLoader.getInstance().init(config);
         setContentView(R.layout.rssfeedreaderactivity);
-       _rssFeedListView = (ListView)findViewById(R.id.rssfeed_listview);
-       _rssFeedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                //Display the Title and Date to the user when they click on an episode
-//                Object o = _rssFeedListView.getItemAtPosition(position);
-//                RssFeedStructure obj_itemDetails = (RssFeedStructure)o;
-//                String objURL = obj_itemDetails.getImgLink();
-//                if (objURL != null){
-////                    Toast.makeText(getApplicationContext(), "objURL = " + objURL, Toast.LENGTH_LONG).show();
-//                }
-//                Intent showContent = new Intent(getApplicationContext(),
-//                MainActivity.class);
-//                showContent.setData(Uri.parse(objURL));
-//                startActivity(showContent);
-                Toast.makeText(getApplicationContext(), "Clicking on an item is a future enhancement, for now click the cloud icon to launch to the webview.", Toast.LENGTH_LONG).show();
-            }
-
-        });
+        for(String s : feeds){
+        	ListView lv = (ListView)findViewById(R.id.rssfeed_listview);
+        	lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	
+	            @Override
+	            public void onItemClick(AdapterView<?> parent, View view, int position,
+	                                    long id) {
+	                //Display the Title and Date to the user when they click on an episode
+	//                Object o = _rssFeedListView.getItemAtPosition(position);
+	//                RssFeedStructure obj_itemDetails = (RssFeedStructure)o;
+	//                String objURL = obj_itemDetails.getImgLink();
+	//                if (objURL != null){
+	////                    Toast.makeText(getApplicationContext(), "objURL = " + objURL, Toast.LENGTH_LONG).show();
+	//                }
+	//                Intent showContent = new Intent(getApplicationContext(),
+	//                MainActivity.class);
+	//                showContent.setData(Uri.parse(objURL));
+	//                startActivity(showContent);
+	                Toast.makeText(getApplicationContext(), "Clicking on an item is a future enhancement, for now click the cloud icon to launch to the webview.", Toast.LENGTH_LONG).show();
+	            }
+	
+			});
+        	
+        	//add to our list of views
+        	_rssFeedListViews.add(lv);
+        }
 
        RssFeedTask rssTask = new RssFeedTask();
        rssTask.execute();
@@ -114,13 +107,13 @@ public class RssFeedReaderActivity extends Activity {
 		@Override
 		protected String doInBackground(String... urls) {
 			  try {
-				  //String feed = "http://feeds.nytimes.com/nyt/rss/HomePage";
 				  
-				  String feed = "http://www.tfmamba.com/external.php?do=rss&type=newcontent&sectionid=155&days=120&count=10";
-				  XmlHandler rh = new XmlHandler();
-				  rssStr = rh.getLatestArticles(feed);
-			        } catch (Exception e) {
-			        }
+				  
+				  for(String s : feeds) { 
+				  	XmlHandler rh = new XmlHandler();
+				  	rssStrs.add(rh.getLatestArticles(s));
+				  }
+			  } catch (Exception e) {}
 			return response;
 
 		}
@@ -129,20 +122,30 @@ public class RssFeedReaderActivity extends Activity {
 		protected void onPostExecute(String result) {
 			  if(sorti.equalsIgnoreCase("sort")){
 				  sorti = "reverse";
-			     Collections.sort(rssStr, new SortingOrder());
+				 for(List<RssFeedStructure> struct : rssStrs){
+					 Collections.sort(struct, new SortingOrder());
+					 }
+			     
 			     
 			  }else if(sorti.equalsIgnoreCase("reverse")){
 				  sorti = "normal";
 				  Comparator comp = Collections.reverseOrder();
-				  Collections.sort(rssStr, new ReverseOrder());
+				  for(List<RssFeedStructure> struct : rssStrs){
+						 Collections.sort(struct, new ReverseOrder());
+				  }
 			  }else{
 				  sorti = "";
 			  }
-			  if(rssStr != null){
-			    _adapter = new RssReaderListAdapter(RssFeedReaderActivity.this,rssStr);
-		        _rssFeedListView.setAdapter(_adapter);
+			  if(rssStrs != null){
+			  	int adapterCt = 0;
+			  	if(_rssFeedListViews == null) return;
+			  	for(ListView lv : _rssFeedListViews){
+			  		if(adapterCt < rssStrs.size()){
+			  			lv.setAdapter(new RssReaderListAdapter(RssFeedReaderActivity.this, rssStrs.get(adapterCt)));
+			  		}
+			  	}
 			  }
-		        Dialog.dismiss();
+			  Dialog.dismiss();
 		}
 	}
     @Override
