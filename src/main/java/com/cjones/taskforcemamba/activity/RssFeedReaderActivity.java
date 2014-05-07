@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import com.cjones.taskforcemamba.About;
 import com.cjones.taskforcemamba.MainActivity;
+import com.cjones.taskforcemamba.MambaApigee;
 import com.cjones.taskforcemamba.R;
 import com.cjones.taskforcemamba.adapter.RssReaderListAdapter;
 import com.cjones.taskforcemamba.helper.SortingOrder;
@@ -52,6 +53,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.apigee.sdk.ApigeeClient;
 
 public class RssFeedReaderActivity extends Activity {
     /** Called when the activity is first created. */
@@ -97,7 +99,7 @@ public class RssFeedReaderActivity extends Activity {
 
        RssFeedTask rssTask = new RssFeedTask();
        rssTask.execute();
-}
+    }
     private class RssFeedTask extends AsyncTask<String, Void, String> {
 		// private String Content;
 		private ProgressDialog Dialog;
