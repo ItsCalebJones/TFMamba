@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.cjones.taskforcemamba;
+package com.cjones.taskforcemamba.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -34,39 +35,41 @@ import android.webkit.WebView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 import android.widget.Toast;
+import com.apigee.sdk.ApigeeClient;
 
+import com.cjones.taskforcemamba.About;
+import com.cjones.taskforcemamba.R;
 import com.cjones.taskforcemamba.activity.RssFeedReaderActivity;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-public class MainActivity extends Activity {
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class WebActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    private String[] mPlanetTitles;
     public WebView myWebView;
-
     public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public static final String ANY = "Any";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String ORGNAME = "";
-        String APPNAME = "";
-
-
         mTitle = mDrawerTitle = getTitle();
 
         //WebView
         Intent launchingIntent = getIntent();
-        String content = launchingIntent.getData().toString();
+//        String content = launchingIntent.getData().toString();
         String home = "http://www.tfmamba.com";
 //        Log.i(TAG, "Content = " + content + " . Home = " + home);
 //        if(content == home){
@@ -75,13 +78,13 @@ public class MainActivity extends Activity {
 //        } else {
 //            Log.i(TAG, "Else Statement - Content = " + content + " . Home = " + home);
 //        }
-        Log.i(TAG, "conte = " + content);
-        WebView myWebView = (WebView) findViewById(R.id.webview);
-            if(content == null){
+//        Log.i(TAG, "conte = " + content);
+        myWebView = (WebView) findViewById(R.id.webview);
+//            if(content == null){
                 myWebView.loadUrl(home);
-        }else {
-                myWebView.loadUrl(content);
-            }
+//        }else {
+//                myWebView.loadUrl(content);
+//            }
         myWebView.setWebViewClient(new WebViewClient());
         myWebView.getSettings().setBuiltInZoomControls(true);
         myWebView.getSettings().setJavaScriptEnabled(true);
@@ -105,11 +108,11 @@ public class MainActivity extends Activity {
         if (savedInstanceState != null) {
             myWebView.restoreState(savedInstanceState);
         } else {
-            if(content == null && !content.isEmpty()){
-            myWebView.loadUrl("http://www.tfmamba.com");
+//            if(content == null && !content.isEmpty()){
+//            myWebView.loadUrl("http://www.tfmamba.com");
             }
         }
-    }
+//    }
 
 
     @Override
@@ -138,16 +141,8 @@ public class MainActivity extends Activity {
                 }
             case R.id.home:
                 Log.i(TAG, "Home trigger");
-                Intent intent = new Intent(this, RssFeedReaderActivity.class);
+                Intent intent = new Intent(this, NavDrawer.class);
                 startActivity(intent);
-                return true;
-            case R.id.youtube:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=ILAT3qPB1FA")));
-                return true;
-            case R.id.about:
-                Log.i(TAG, "About trigger");
-                Intent ThisIntent = new Intent(this, About.class);
-                startActivity(ThisIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -169,11 +164,12 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // Check if the key event was the Back button and if there's history
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && myWebView.canGoBack()) {
-            myWebView.goBack();
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && this.myWebView.canGoBack()) {
+            this.myWebView.goBack();
             return true;
         }
         // If it wasn't the Back key or there's no web page history, bubble up to the default

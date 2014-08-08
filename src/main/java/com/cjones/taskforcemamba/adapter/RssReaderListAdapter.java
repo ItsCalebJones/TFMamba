@@ -41,6 +41,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.squareup.picasso.Picasso;
 
 public class RssReaderListAdapter extends ArrayAdapter<RssFeedStructure> {
 	List<RssFeedStructure> imageAndTexts1 =null;
@@ -63,6 +64,7 @@ TextView dtextView = (TextView) rowView.findViewById(R.id.feed_description);
 TextView timeFeedText = (TextView) rowView.findViewById(R.id.feed_updatetime);
 TextView feed_link = (TextView)rowView.findViewById(R.id.feed_link);
 ImageView imageView = (ImageView) rowView.findViewById(R.id.feed_image);
+
 //        try {
         	
         	Log.d("rssfeed", "imageAndTexts1.get(position).getImgLink() :: " +imageAndTexts1.get(position).getImgLink() +" :: " +imageAndTexts1.get(position).getTitle());
@@ -74,28 +76,29 @@ ImageView imageView = (ImageView) rowView.findViewById(R.id.feed_image);
         	content.setSpan(new UnderlineSpan(), 0, 13, 0);
 
             timeFeedText.setText(content);
-            //ISSUE FIXED: Feed image isn't returning the URL's inside <img src> instead is returning the Title URL
+//            //ISSUE FIXED: Feed image isn't returning the URL's inside <img src> instead is returning the Title URL
             if(imageAndTexts1.get(position).getImgLink() !=null){
                 String feedImage = imageAndTexts1.get(position).getImgLink().toString();
                 String NewFeedImage = String.valueOf(feedImage);
                 Log.i("Mamba", "feedImage = " + feedImage + "NewFeedImage = " + NewFeedImage);
                 if(!feedImage.toString().equalsIgnoreCase("null")){
-                    //String feed = "http://feeds.nytimes.com/nyt/rss/HomePage";
-//                    HttpURLConnection conn= (HttpURLConnection)feedImage.openConnection();
-//                    InputStream is = conn.getInputStream();
-//                    IMGFeedTask IMGTask = new IMGFeedTask();
-//                    IMGTask.execute();
-
-                    DisplayImageOptions options = new DisplayImageOptions.Builder()
-                    .cacheInMemory(true)
-                    .cacheOnDisc(true)
-                    .build();
-                    ImageLoader.getInstance().displayImage(NewFeedImage, imageView, options);
+                    Picasso.with(getContext()).load(NewFeedImage).into(imageView);
                 }
                 else{
                     imageView.setBackgroundResource(R.drawable.ic_launcher);
                 }
             }
+    if(imageAndTexts1.get(position).getYouTubeLink() !=null){
+        String feedImage = imageAndTexts1.get(position).getYouTubeLink().toString();
+        String NewFeedImage = String.valueOf(feedImage);
+        Log.i("Mamba", "feedImage = " + feedImage + "NewFeedImage = " + NewFeedImage);
+        if(!feedImage.toString().equalsIgnoreCase("null")){
+            Picasso.with(getContext()).load("http://img.youtube.com/vi/" + NewFeedImage + "/0.jpg").resize(1000,750).into(imageView);
+        }
+        else{
+            imageView.setBackgroundResource(R.drawable.ic_launcher);
+        }
+    }
 
 
        

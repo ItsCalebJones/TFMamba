@@ -37,7 +37,7 @@ public class NowLayout extends LinearLayout implements OnGlobalLayoutListener {
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
 
-            int[] location = new int[2];
+            int[] location = new int[4];
 
             child.getLocationOnScreen(location);
 

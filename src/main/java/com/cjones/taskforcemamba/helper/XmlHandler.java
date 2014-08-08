@@ -108,12 +108,16 @@ SAXParserFactory spf = SAXParserFactory.newInstance();
 SAXParser sp = spf.newSAXParser();
 XMLReader xr = sp.getXMLReader();
 url = new URL(feedUrl);
+
 xr.setContentHandler(this);
 xr.parse(new InputSource(url.openStream()));
 } catch (IOException e) {
+    Log.i("Task Force Mamba - IO", "IOException = " + e);
 } catch (SAXException e) {
+    Log.i("Task Force Mamba - SAS", "SASException = " + e);
 
 } catch (ParserConfigurationException e) {
+    Log.i("Task Force Mamba - PAR", "ParserConfigurationException = " + e);
 
 }
 

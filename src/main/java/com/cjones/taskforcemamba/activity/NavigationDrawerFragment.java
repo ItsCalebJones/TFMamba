@@ -1,33 +1,5 @@
 package com.cjones.taskforcemamba.activity;
 
-<<<<<<< HEAD
-import java.net.URL;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Vector;
-
-import org.json.JSONObject;
-
-import com.cjones.taskforcemamba.About;
-import com.cjones.taskforcemamba.MainActivity;
-import com.cjones.taskforcemamba.MambaApigee;
-import com.cjones.taskforcemamba.R;
-import com.cjones.taskforcemamba.adapter.RssReaderListAdapter;
-import com.cjones.taskforcemamba.helper.SortingOrder;
-import com.cjones.taskforcemamba.helper.ReverseOrder;
-import com.cjones.taskforcemamba.helper.RssFeedStructure;
-import com.cjones.taskforcemamba.helper.XmlHandler;
-import com.cjones.taskforcemamba.adapter.RssReaderListAdapter;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-=======
->>>>>>> 4c7ef25af97f093c0ea8ae83d89915d167ee4fa3
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -49,7 +21,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.apigee.sdk.ApigeeClient;
 
 import com.cjones.taskforcemamba.R;
 
@@ -218,58 +189,6 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-<<<<<<< HEAD
-       RssFeedTask rssTask = new RssFeedTask();
-       rssTask.execute();
-    }
-    private class RssFeedTask extends AsyncTask<String, Void, String> {
-		// private String Content;
-		private ProgressDialog Dialog;
-		String response = "";
-
-		@Override
-		protected void onPreExecute() {
-			Dialog = new ProgressDialog(RssFeedReaderActivity.this);
-			Dialog.setMessage("Rss Loading...");
-			Dialog.show();
-		
-		}
-
-		@Override
-		protected String doInBackground(String... urls) {
-			  try {
-				  //String feed = "http://feeds.nytimes.com/nyt/rss/HomePage";
-				  
-				  String feed = "http://www.tfmamba.com/external.php?do=rss&type=newcontent&sectionid=155&days=120&count=10";
-				  XmlHandler rh = new XmlHandler();
-				  rssStr = rh.getLatestArticles(feed);
-			        } catch (Exception e) {
-			        }
-			return response;
-
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			  if(sorti.equalsIgnoreCase("sort")){
-				  sorti = "reverse";
-			     Collections.sort(rssStr, new SortingOrder());
-			     
-			  }else if(sorti.equalsIgnoreCase("reverse")){
-				  sorti = "normal";
-				  Comparator comp = Collections.reverseOrder();
-				  Collections.sort(rssStr, new ReverseOrder());
-			  }else{
-				  sorti = "";
-			  }
-			  if(rssStr != null){
-			    _adapter = new RssReaderListAdapter(RssFeedReaderActivity.this,rssStr);
-		        _rssFeedListView.setAdapter(_adapter);
-			  }
-		        Dialog.dismiss();
-		}
-	}
-=======
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
@@ -286,7 +205,6 @@ public class NavigationDrawerFragment extends Fragment {
         }
     }
 
->>>>>>> 4c7ef25af97f093c0ea8ae83d89915d167ee4fa3
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

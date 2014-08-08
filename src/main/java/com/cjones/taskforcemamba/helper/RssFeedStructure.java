@@ -16,6 +16,7 @@ private String pubDate;
 private URL url;
 private String encodedContent;
 private String URLLink;
+private String YouTubeLink;
 
 public long getArticleId() {
 return articleId;
@@ -82,6 +83,23 @@ public void setDescription(String description) {
 
         this.description = this.description.replace(cleanUp, "");
     }
+    if (description.contains("src=\"//www.youtube.com/embed/")){
+        String YouT = description.substring(description.indexOf("src=\"//www.youtube.com/embed/"));
+        String cleanUp = YouT.substring(0, YouT.indexOf("?"));
+        YouT = cleanUp.substring(YouT.indexOf("src=//") + 5);
+        String s = "\"//www.youtube.com/embed/";
+        if(YouT.contains("\"//www.youtube.com/embed/")){
+            YouT = YouT.replace("\"//www.youtube.com/embed/", "");
+        }
+        int indexOf = YouT.indexOf("");
+        if (indexOf==-1){
+            indexOf = YouT.indexOf("\"");
+        }
+
+
+        setYouTubeLink(YouT);
+
+    }
 }
 /**
 * @return the description
@@ -121,9 +139,19 @@ return encodedContent;
         this.imgLink = imgLink;
         Log.i("Mamba", "imgLink =" + this.imgLink);
     }
+    /**
+     * @param YouTubeLink the imgLink to set
+     */
+    public void setYouTubeLink(String YouTubeLink) {
+        this.YouTubeLink = YouTubeLink;
+        Log.i("Mamba", "YouTubeLink =" + this.YouTubeLink);
+    }
 /**
 * @return the imgLink
 */
+public String getYouTubeLink() {
+    return YouTubeLink;
+}
 public String getImgLink() {
 return imgLink;
 }
